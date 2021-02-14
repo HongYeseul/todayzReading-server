@@ -22,7 +22,7 @@ router.get('/',function(req, res, next) {
   })
   //res.render('index', { title: 'Express' });
   // For test commit
-  // Close Issue commit
+  // close Issue commit
 });
 
 module.exports = router;
