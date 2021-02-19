@@ -1,9 +1,10 @@
 var request = require('request');
 var express = require('express');
 var router = express.Router();
+var {KAKAO_REST_API_KEY} = require('../secret/KAKAO_API_KEY');
 
 const options = {
-  headers:{"Authorization": "KakaoAK KAKAO-REST-API-KEY"},
+  headers:{"Authorization": `KakaoAK ${KAKAO_REST_API_KEY}`},
   url:"https://dapi.kakao.com/v3/search/book",
   qs:{
     target: 'title',
