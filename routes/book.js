@@ -13,7 +13,7 @@ const options = {
 }
 
 // 도서검색
-router.get('/search/user',function(req, res, next) {
+router.get('/search/',function(req, res, next) {
   options.qs = {target: 'title', query:`${req.body.title}`}
   request.get(options, function(err, response, body){
     if(err)
@@ -21,6 +21,28 @@ router.get('/search/user',function(req, res, next) {
     else
       res.json(body);
   })
+});
+
+// 유저가 저장한 독후감 중 도서 검색
+router.get('/search/user/:id',function(req, res, next) {
+  try{
+    var sql = `SELECT * FROM Books WHERE userId = '${req.params.id}' AND title LIKE '%${req.body.title}%';`;    
+    conn.query(sql, function (err, rows, fields) {
+        if(err) res.send(err);
+        else{
+          const inform = {
+            title : rows[0].title,
+            authors : rows[0].authors,
+            publisher : rows[0].publisher,
+            grade : rows[0].grade,
+            review : rows[0].review
+          }
+          res.json(inform);
+        } 
+    });
+  }catch(err){
+    res.send(err);
+  }
 });
 
 router.route('/review/:id')
