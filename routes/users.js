@@ -12,7 +12,7 @@ router.post('/login', (req, res, next) => {
       if (err)
         console.log('query is not excuted. select fail...\n' + err);
       else
-        res.json(rows[0].cnt);
+        res.json({ success : rows[0].cnt});
     });
   } catch (err) {
     res.send(err);
