@@ -5,15 +5,16 @@ var conn = db_config.init();
 db_config.connect(conn);
 
 // 로그인 
-router.post('/login', function(req, res, next) {
-  try{
-    // test for pull request REQUEST
-    var sql = `SELECT COUNT(userID) as cnt FROM Users WHERE userId='${req.body.id}' AND userPw='${req.body.pw}';`;    
+router.post('/login', (req, res, next) => {
+  try {
+    var sql = `SELECT COUNT(userID) as cnt FROM Users WHERE userId='${req.body.id}' AND userPw='${req.body.pw}';`;
     conn.query(sql, function (err, rows, fields) {
-        if(err) console.log('query is not excuted. select fail...\n' + err);
-        else res.json(rows[0].cnt);
+      if (err)
+        console.log('query is not excuted. select fail...\n' + err);
+      else
+        res.json(rows[0].cnt);
     });
-  }catch(err){
+  } catch (err) {
     res.send(err);
   }
 });
