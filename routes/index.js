@@ -1,29 +1,33 @@
-var request = require('request');
 var express = require('express');
 var router = express.Router();
-var {KAKAO_REST_API_KEY} = require('../secret/KAKAO_API_KEY');
+var db_config = require('../config/database.js');
+var conn = db_config.init();
+db_config.connect(conn);
 
-const options = {
-  headers:{"Authorization": `KakaoAK ${KAKAO_REST_API_KEY}`},
-  url:"https://dapi.kakao.com/v3/search/book",
-  qs:{
-    target: 'title',
-    query: '안녕',
-  },
-  json:true
-}
-
-/* GET home page. */
-router.get('/',function(req, res, next) {
-  request.get(options, function(err, response, body){
-    if(err)
-      res.send("ERROR");
-    else
-      res.json(body);
-  })
-  //res.render('index', { title: 'Express' });
-  // For test commit
-  // close Issue commit
+/* 메인페이지 - 유저가 저장한 도서 목록 */
+router.get('/:id',function(req, res, next) {
+  try{
+    var sql = `SELECT * FROM Books WHERE userId = '${req.params.id}';`;    
+    conn.query(sql, function (err, rows, fields) {
+        if(err) res.send(err);
+        else{
+          let inform = [];
+          for(let i=0; i<rows.length; i++){
+            let temp = {
+              title : rows[i].title,
+              authors : rows[i].authors,
+              publisher : rows[i].publisher,
+              grade : rows[i].grade,
+              review : rows[i].review
+            }
+            inform.push(temp);
+          }
+          res.json(inform);
+        } 
+    });
+  }catch(err){
+    res.send(err);
+  }
 });
 
 module.exports = router;
