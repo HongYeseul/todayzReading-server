@@ -25,7 +25,8 @@ router.post('/search/',function(req, res, next) {
         let temp = {
           title : document[i].title,
           authors : document[i].authors,
-          publisher : document[i].publisher
+          publisher : document[i].publisher,
+          thumbnail : document[i].thumbnail
         }
         result.push(temp);
       }
