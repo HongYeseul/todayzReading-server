@@ -18,8 +18,19 @@ router.post('/search/',function(req, res, next) {
   request.get(options, function(err, response, body){
     if(err)
       res.send("ERROR");
-    else
-      res.json(body);
+    else{
+      let result = [];
+      let document = body.documents;
+      for(let i=0; i<document.length; i++){
+        let temp = {
+          title : document[i].title,
+          authors : document[i].authors,
+          publisher : document[i].publisher
+        }
+        result.push(temp);
+      }
+      res.json(result);
+    }
   })
 });
 
