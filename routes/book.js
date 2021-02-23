@@ -13,7 +13,7 @@ const options = {
 }
 
 // 도서검색
-router.get('/search/',function(req, res, next) {
+router.post('/search/',function(req, res, next) {
   options.qs = {target: 'title', query:`${req.body.title}`}
   request.get(options, function(err, response, body){
     if(err)
