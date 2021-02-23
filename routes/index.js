@@ -18,7 +18,8 @@ router.get('/:id',function(req, res, next) {
               authors : rows[i].authors,
               publisher : rows[i].publisher,
               grade : rows[i].grade,
-              review : rows[i].review
+              review : rows[i].review,
+              thumbnail : rows[i].thumbnail,
             }
             inform.push(temp);
           }

@@ -49,7 +49,8 @@ router.post('/search/user/:id',function(req, res, next) {
               authors : rows[i].authors,
               publisher : rows[i].publisher,
               grade : rows[i].grade,
-              review : rows[i].review
+              review : rows[i].review,
+              thumbnail : rows[i].thumbnail
             }
             inform.push(temp)
           }
@@ -84,8 +85,8 @@ router.route('/review/:id')
   })
   .post((req, res, next)=>{ // 독후감 추가
     try{
-      var sql = `INSERT INTO Books(userId, title, authors, publisher, grade, review) 
-                  VALUES('${req.params.id}', '${req.body.title}', '${req.body.authors}', '${req.body.publisher}', '${req.body.grade}', '${req.body.review}');`;    
+      var sql = `INSERT INTO Books(userId, title, authors, grade, review, thumbnail) 
+                  VALUES('${req.params.id}', '${req.body.title}', '${req.body.authors}', ${req.body.grade}, '${req.body.review}', '${req.body.thumbnail}');`;    
       conn.query(sql, function (err, rows, fields) {
           if(err) console.log('query is not excuted. select fail...\n' + err);
           else res.json({value : 1});
