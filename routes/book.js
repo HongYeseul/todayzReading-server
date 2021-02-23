@@ -24,18 +24,22 @@ router.get('/search/',function(req, res, next) {
 });
 
 // 유저가 저장한 독후감 중 도서 검색
-router.get('/search/user/:id',function(req, res, next) {
+router.post('/search/user/:id',function(req, res, next) {
   try{
     var sql = `SELECT * FROM Books WHERE userId = '${req.params.id}' AND title LIKE '%${req.body.title}%';`;    
     conn.query(sql, function (err, rows, fields) {
         if(err) res.send(err);
         else{
-          const inform = {
-            title : rows[0].title,
-            authors : rows[0].authors,
-            publisher : rows[0].publisher,
-            grade : rows[0].grade,
-            review : rows[0].review
+          let inform = [];
+          for(let i=0; i<rows.length; i++){
+            let temp = {
+              title : rows[i].title,
+              authors : rows[i].authors,
+              publisher : rows[i].publisher,
+              grade : rows[i].grade,
+              review : rows[i].review
+            }
+            inform.push(temp)
           }
           res.json(inform);
         } 
