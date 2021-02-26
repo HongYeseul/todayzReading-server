@@ -20,10 +20,10 @@ router.post('/login', (req, res, next) => {
 });
 
 // 회원가입
-router.route('/signUp')
+router.route('/signUp/:id')
   .get((req, res, next)=>{ // 회원가입 - 중복 아이디 확인
     try{
-      var sql = `SELECT EXISTS (select * from todayzReading.Users where userId='${req.body.id}') as chk;`;    
+      var sql = `SELECT EXISTS (select * from todayzReading.Users where userId='${req.params.id}') as chk;`;    
       conn.query(sql, function (err, rows, fields) {
           if(err) console.log('query is not excuted. select fail...\n' + err);
           else res.json(rows);
@@ -34,7 +34,7 @@ router.route('/signUp')
   })
   .post((req, res, next)=>{ // 회원가입
     try{
-      var sql = `INSERT INTO Users(userId, userPw, userName) VALUES ('${req.body.id}', '${req.body.pw}', '${req.body.name}');`;
+      var sql = `INSERT INTO Users(userId, userPw, userName) VALUES ('${req.params.id}', '${req.body.pw}', '${req.body.name}');`;
       conn.query(sql, function (err, rows, fields) {
           if(err) console.log('query is not excuted. select fail...\n' + err);
           else res.json({value : 1});
