@@ -1,6 +1,6 @@
 # Today's Reading (Server)
 
-```today's reading``` 앱의 서버를 위한 레포지토리입니다.
+[```today's reading``` 앱](https://github.com/HongYeseul/todayzReading)의 서버를 위한 레포지토리입니다.
 
 해당 서버가 구성된 API 및 DB 설계는 다음과 같습니다.
 
